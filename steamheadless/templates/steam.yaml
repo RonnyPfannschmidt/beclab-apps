@@ -186,6 +186,10 @@ spec:
               mountPath: /dev/input/
             - name: dshm
               mountPath: /dev/shm
+            - name: flatpak-data
+              mountPath: /root/.local/share/flatpak
+            - name: flatpak-appdata
+              mountPath: /root/.var/app
         {{- if and .Values.deviceName (eq .Values.deviceName "Olares One") }}
             - name: snd
               mountPath: /dev/snd
@@ -207,6 +211,14 @@ spec:
         - name: dshm
           emptyDir:
             medium: Memory
+        - name: flatpak-data
+          hostPath:
+            type: DirectoryOrCreate
+            path: {{ .Values.userspace.appData }}/{{ .Release.Name }}/flatpak
+        - name: flatpak-appdata
+          hostPath:
+            type: DirectoryOrCreate
+            path: {{ .Values.userspace.appData }}/{{ .Release.Name }}/flatpak-appdata
     {{- if and .Values.deviceName (eq .Values.deviceName "Olares One") }}
         - name: snd
           hostPath:
