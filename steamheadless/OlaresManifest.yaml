@@ -5,7 +5,7 @@ metadata:
   description: A Headless Steam Service
   icon: https://app.cdn.olares.com/appstore/steamheadless/icon.png
   appid: steamheadless
-  version: '1.0.29'
+  version: '1.0.30'
   title: Steam Headless
   categories:
   - Fun
@@ -75,14 +75,19 @@ ports:
   port: 48002
   protocol: udp
   exposePort: 48002
-tailscale: 
+- name: minecraft
+  host: steamheadless
+  port: 25565
+  protocol: tcp
+  exposePort: 25565
+tailscale:
   acls:
   - proto: tcp
     dst:
-    - "*:47990,47984,47989,48010"
+    - "*:47990,47984,47989,48010,25565"
   - proto: udp
     dst:
-    - "*:47998,47999,48000,48002"    
+    - "*:47998,47999,48000,48002"
 permission:
   appData: true
   appCache: true
